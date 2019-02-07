@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 // connect to db
 const mongoose = require('./config/db')
@@ -10,6 +11,7 @@ const PORT = 4000
 const app = express()
 
 app.use(cors())
+app.use(morgan('combined'))
 app.use(bodyParser.json())
 
 // movie routes
