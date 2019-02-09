@@ -9,7 +9,7 @@ class MoviesList extends Component {
     }
 
     componentDidMount() {
-        Api().get('posts')
+        Api().get('movies')
             .then(res => this.setState({movies: res.data}))
             .catch(err => console.log(err))
     }   
@@ -29,8 +29,8 @@ class MoviesList extends Component {
                 </Row>
                 <ListGroup>
                         {this.state.movies.map((movie) => (
-                            <ListGroupItem key={movie.id} style={{backgroundColor:"lightgray"}}>
-                                {movie.title}
+                            <ListGroupItem key={movie._id} style={{backgroundColor:"lightgray"}}>
+                                {movie.movie_title}
                             </ListGroupItem>
                         ))}
                 </ListGroup>
