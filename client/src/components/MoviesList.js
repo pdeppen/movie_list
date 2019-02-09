@@ -1,26 +1,36 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, ListGroup, ListGroupItem, Button } from 'reactstrap'
+import Api from '../services/Api'
 
 class MoviesList extends Component {
 
     state = {
-        movies:[
-            {
-                movie_title: "Testing Title",
-                id: 1 
-            }
-        ]
+        movies:[]
+    }
+
+    componentDidMount() {
+        Api().get('posts')
+            .then(res => this.setState({movies: res.data}))
+            .catch(err => console.log(err))
+    }   
+
+    onTableClick() {
+        alert('Table View Not Yet Supported')
     }
 
     render() {
         return(
             <Container>
-                <h3>Movies List</h3>
-
+                <Row>
+                    <Col><h3>Movies List</h3></Col>
+                </Row>
+                <Row>
+                    <Col><Button onClick={() => this.onTableClick()} color="info">Table View</Button></Col>
+                </Row>
                 <ListGroup>
                         {this.state.movies.map((movie) => (
                             <ListGroupItem key={movie.id} style={{backgroundColor:"lightgray"}}>
-                                {movie.movie_title}
+                                {movie.title}
                             </ListGroupItem>
                         ))}
                 </ListGroup>
