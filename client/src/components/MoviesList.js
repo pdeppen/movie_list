@@ -4,7 +4,7 @@ import {
     ListGroup, ListGroupItem, 
     Button, 
     Table, 
-    Modal, ModalHeader, ModalBody, ModalFooter, 
+    Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
     Label, Input } from 'reactstrap'
 import Api from '../services/Api'
 
@@ -13,7 +13,8 @@ class MoviesList extends Component {
     state = {
         movies:[],
         tableView: true,
-        showModal: false
+        showDropdown: false,
+        sortBy: ""
     }
 
     componentDidMount() {
@@ -27,7 +28,7 @@ class MoviesList extends Component {
     }
 
     onSortClick() {
-        this.setState({showModal: !this.state.showModal})
+        this.setState({showDropdown: !this.state.showDropdown})
     }
 
     render() {
@@ -71,23 +72,19 @@ class MoviesList extends Component {
 
         const buttonTitle = this.state.tableView ? "List View" : "Table View"
 
-        const sortByModal = 
-            <Modal isOpen={this.state.showModal}>
-                <ModalHeader toggle={() => this.onSortClick()}>Sort By:</ModalHeader>
-                <ModalBody>
-                <Label for="exampleSelect">Options</Label>
-                <Input type="select" name="select" id="exampleSelect">
-                    <option>Title</option>
-                    <option>Rating</option>
-                    <option>Date Added</option>
-                    <option>Year</option>
-                    <option>Genre</option>
-                </Input>
-                </ModalBody>
-                <ModalFooter>
-                    <Button onClick={() => this.onSortClick()} color="primary">Select</Button>
-                </ModalFooter>
-            </Modal>
+        const sortByDropdown = 
+            <Dropdown isOpen={this.state.showDropdown} toggle={() => this.onSortClick()}>
+                <DropdownToggle caret>
+                    Sort By:
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem header>Select</DropdownItem>
+                    <DropdownItem>Title</DropdownItem>
+                    <DropdownItem>Year</DropdownItem>
+                    <DropdownItem>Rating</DropdownItem>
+                    <DropdownItem>Genre</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
 
         return(
             <Container>
@@ -95,6 +92,7 @@ class MoviesList extends Component {
                     <Col><h3>Movies List</h3></Col>
                 </Row>
                 <Row>
+                    {sortByDropdown}
                     <Col>
                         <Button 
                             onClick={() => this.onTableClick()} 
@@ -102,16 +100,9 @@ class MoviesList extends Component {
                         >
                         {buttonTitle}
                         </Button>
-                        <Button 
-                            onClick={() => this.onSortClick()}
-                            style={{marginLeft: '5px'}} 
-                        >
-                        Sort By:
-                        </Button>
                     </Col>
                 </Row>
                 {movies}
-                {sortByModal}
             </Container>
         )
     }
