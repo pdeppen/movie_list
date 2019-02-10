@@ -14,7 +14,7 @@ class MoviesList extends Component {
         movies:[],
         tableView: true,
         showDropdown: false,
-        sortBy: ""
+        sortBy: ""    
     }
 
     componentDidMount() {
@@ -29,6 +29,20 @@ class MoviesList extends Component {
 
     onSortClick() {
         this.setState({showDropdown: !this.state.showDropdown})
+    }
+
+    compareBy(key) {
+        return function (a, b) {
+          if (a[key] < b[key]) return -1
+          if (a[key] > b[key]) return 1
+          return 0
+        }
+      }
+
+    sorting (sortingValue) {
+        const tempMovies = this.state.movies
+        tempMovies.sort(this.compareBy(sortingValue));
+        this.setState({movies: tempMovies})
     }
 
     render() {
@@ -79,10 +93,11 @@ class MoviesList extends Component {
                 </DropdownToggle>
                 <DropdownMenu>
                     <DropdownItem header>Select</DropdownItem>
-                    <DropdownItem>Title</DropdownItem>
-                    <DropdownItem>Year</DropdownItem>
-                    <DropdownItem>Rating</DropdownItem>
-                    <DropdownItem>Genre</DropdownItem>
+                    <DropdownItem onClick={() => this.sorting("movie_title")}>Title</DropdownItem>
+                    <DropdownItem onClick={() => this.sorting("movie_year")}>Year</DropdownItem>
+                    <DropdownItem onClick={() => this.sorting("movie_rating")}>Rating</DropdownItem>
+                    <DropdownItem onClick={() => this.sorting("movie_genre")}>Genre</DropdownItem>
+                    <DropdownItem onClick={() => this.sorting("date_added")}>Date Added</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
 
