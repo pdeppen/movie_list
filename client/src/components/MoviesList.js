@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, ListGroup, ListGroupItem, Button, Table } from 'reactstrap'
+import { 
+    Container, Row, Col, 
+    ListGroup, ListGroupItem, 
+    Button, 
+    Table, 
+    Modal, ModalHeader, ModalBody, ModalFooter, 
+    Label, Input } from 'reactstrap'
 import Api from '../services/Api'
 
 class MoviesList extends Component {
@@ -7,19 +13,21 @@ class MoviesList extends Component {
     state = {
         movies:[],
         tableView: true,
+        showModal: false
     }
 
     componentDidMount() {
         Api().get('movies')
-            .then(res => { 
-                this.setState({movies: res.data}) 
-                console.log(res.data)
-            })
+            .then(res => this.setState({movies: res.data}))
             .catch(err => console.log(err))
     }   
 
     onTableClick() {
         this.setState({tableView: !this.state.tableView})
+    }
+
+    onSortClick() {
+        this.setState({showModal: !this.state.showModal})
     }
 
     render() {
@@ -58,10 +66,28 @@ class MoviesList extends Component {
                 ))}
                 </tbody>
             </Table>
-
+        
         const movies = this.state.tableView ? tableView : listView
 
         const buttonTitle = this.state.tableView ? "List View" : "Table View"
+
+        const sortByModal = 
+            <Modal isOpen={this.state.showModal}>
+                <ModalHeader toggle={() => this.onSortClick()}>Sort By:</ModalHeader>
+                <ModalBody>
+                <Label for="exampleSelect">Options</Label>
+                <Input type="select" name="select" id="exampleSelect">
+                    <option>Title</option>
+                    <option>Rating</option>
+                    <option>Date Added</option>
+                    <option>Year</option>
+                    <option>Genre</option>
+                </Input>
+                </ModalBody>
+                <ModalFooter>
+                    <Button onClick={() => this.onSortClick()} color="primary">Select</Button>
+                </ModalFooter>
+            </Modal>
 
         return(
             <Container>
@@ -69,9 +95,23 @@ class MoviesList extends Component {
                     <Col><h3>Movies List</h3></Col>
                 </Row>
                 <Row>
-                    <Col><Button onClick={() => this.onTableClick()} color="info">{buttonTitle}</Button></Col>
+                    <Col>
+                        <Button 
+                            onClick={() => this.onTableClick()} 
+                            color="info"
+                        >
+                        {buttonTitle}
+                        </Button>
+                        <Button 
+                            onClick={() => this.onSortClick()}
+                            style={{marginLeft: '5px'}} 
+                        >
+                        Sort By:
+                        </Button>
+                    </Col>
                 </Row>
                 {movies}
+                {sortByModal}
             </Container>
         )
     }
