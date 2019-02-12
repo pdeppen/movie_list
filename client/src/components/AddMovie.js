@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Alert, Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Alert, Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import Api from '../services/Api'
 
 class AddMovie extends Component {
 
@@ -65,21 +66,23 @@ class AddMovie extends Component {
     onFormSubmit = (e) => {
         e.preventDefault()
 
-        this.setState({showAlert: true})
-        console.log(
-            "Movie Title: " + this.state.movie_title +
-            "\nMovie Year: " + this.state.movie_year +
-            "\nMovie Genre: " + this.state.movie_genre +
-            "\nWatched: " + this.state.watched + 
-            "\nRating: " + this.state.movie_rating + 
-            "\nDirector: " + this.state.movie_director
-        )
+        Api().post('movies/create', {
+            movie_title: this.state.movie_title,
+            movie_director: this.state.movie_director,
+            movie_year: this.state.movie_year,
+            movie_genre: this.state.movie_genre,
+            watched: this.state.watched,
+            movie_rating: this.state.movie_rating
+        })
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err))
 
         this.setState({
             movie_title: "",
             movie_genre: "Action",
             movie_year: 2019,
-            watched: false
+            watched: false,
+            showAlert: true
         })
     }
 
