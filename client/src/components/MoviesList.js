@@ -6,6 +6,7 @@ import {
     Table, 
     Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
  } from 'reactstrap'
+import moment from 'moment'
 import Api from '../services/Api'
 
 class MoviesList extends Component {
@@ -63,7 +64,7 @@ class MoviesList extends Component {
             </ListGroup>
         
         const tableView = 
-            <Table  bordered striped responsive>
+            <Table bordered striped responsive>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -73,6 +74,7 @@ class MoviesList extends Component {
                         <th>Year</th>
                         <th>Director</th>
                         <th>Your Rating</th>
+                        <th>Date Added</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,6 +87,7 @@ class MoviesList extends Component {
                         <td>{movie.movie_year}</td>
                         <td>{movie.movie_director}</td>
                         <td>{movie.watched ? movie.movie_rating : "N/A"}</td>
+                        <td>{moment(movie.date_added).format('MM-DD-YYYY')}</td>
                     </tr>
                 ))}
                 </tbody>
