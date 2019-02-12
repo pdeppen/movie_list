@@ -50,7 +50,7 @@ class MoviesList extends Component {
         const listView = 
             <ListGroup>
             {this.state.movies.map((movie, index) => (
-                index % 2 == 0 ?                    
+                index % 2 === 0 ?                    
                 <ListGroupItem key={movie._id} style={{backgroundColor:"#E5E8E8"}}>
                     {movie.movie_title}
                 </ListGroupItem>
