@@ -15,7 +15,8 @@ const MovieSchema = new Schema({
         type: String
     },
     watched: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     date_added: {
         type: Date,

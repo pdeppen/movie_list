@@ -29,7 +29,7 @@ class AppNavbar extends Component {
         return (
             <Router>
                 <div className="AppNavbar">
-                    <Navbar color="dark" dark expand="sm" className="mb-5">
+                    <Navbar sticky="top" color="dark" dark expand="sm" className="mb-5">
                         <Container>
                             <NavbarBrand href="/">Movies App</NavbarBrand>
                             <NavbarToggler onClick={this.toggle} />
