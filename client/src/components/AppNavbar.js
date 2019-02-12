@@ -14,6 +14,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 // components
 import MoviesList from './MoviesList'
 import Landing from './Landing'
+import AddMovie from './AddMovie'
 
 class AppNavbar extends Component {
     state = {
@@ -41,6 +42,9 @@ class AppNavbar extends Component {
                                             <Link to="/movies" className="nav-link">Movies List</Link>
                                         </NavItem>
                                         <NavItem>
+                                            <Link to="/create" className="nav-link">Add Movie</Link>
+                                        </NavItem>
+                                        <NavItem>
                                             <NavLink href="https://github.com/pdeppen">Github</NavLink>
                                         </NavItem>
                                     </Nav>
@@ -49,6 +53,7 @@ class AppNavbar extends Component {
                     </Navbar>
                     <Route path="/" exact component={Landing} />
                     <Route path="/movies" component={MoviesList} /> 
+                    <Route path="/create" component={AddMovie} /> 
                 </div>
             </Router>
         )

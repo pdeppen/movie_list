@@ -5,7 +5,7 @@ import {
     Button, 
     Table, 
     Dropdown, DropdownToggle, DropdownMenu, DropdownItem,
-    Label, Input } from 'reactstrap'
+ } from 'reactstrap'
 import Api from '../services/Api'
 
 class MoviesList extends Component {
@@ -49,17 +49,24 @@ class MoviesList extends Component {
 
         const listView = 
             <ListGroup>
-            {this.state.movies.map((movie) => (
+            {this.state.movies.map((movie, index) => (
+                index % 2 == 0 ?                    
                 <ListGroupItem key={movie._id} style={{backgroundColor:"#E5E8E8"}}>
                     {movie.movie_title}
                 </ListGroupItem>
+                :
+                <ListGroupItem key={movie._id}>
+                    {movie.movie_title}
+                </ListGroupItem>
+
             ))}
             </ListGroup>
         
         const tableView = 
-            <Table responsive>
+            <Table  bordered striped responsive>
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Title</th>
                         <th>Watched</th>
                         <th>Genre</th>
@@ -69,8 +76,9 @@ class MoviesList extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                {this.state.movies.map((movie) => (
+                {this.state.movies.map((movie, index) => (
                     <tr key={movie._id}>
+                        <td>{index+1}</td>
                         <td>{movie.movie_title}</td>
                         <td>{movie.watched ? "Yes" : "No"}</td>
                         <td>{movie.movie_genre}</td>
@@ -107,15 +115,14 @@ class MoviesList extends Component {
                     <Col><h3>Movies List</h3></Col>
                 </Row>
                 <Row>
-                    {sortByDropdown}
-                    <Col>
+                    <Col xs="auto">
                         <Button 
                             onClick={() => this.onTableClick()} 
                             color="info"
-                        >
-                        {buttonTitle}
+                        >{buttonTitle}
                         </Button>
                     </Col>
+                    {sortByDropdown}
                 </Row>
                 {movies}
             </Container>
