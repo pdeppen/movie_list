@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import MoviesList from './MoviesList'
 import Landing from './Landing'
 import AddMovie from './AddMovie'
+import UserHome from './UserHome'
 
 class AppNavbar extends Component {
     state = {
@@ -36,7 +37,7 @@ class AppNavbar extends Component {
                                 <Collapse isOpen={this.state.isOpen} navbar>
                                     <Nav className="ml-auto" navbar>
                                         <NavItem>
-                                            <Link to="/" className="nav-link">Home</Link>
+                                            <Link to="/home" className="nav-link">Home</Link>
                                         </NavItem>
                                         <NavItem>
                                             <Link to="/movies" className="nav-link">Movies List</Link>
@@ -54,6 +55,7 @@ class AppNavbar extends Component {
                     <Route path="/" exact component={Landing} />
                     <Route path="/movies" component={MoviesList} /> 
                     <Route path="/create" component={AddMovie} /> 
+                    <Route path="/home" exact component={UserHome} />
                 </div>
             </Router>
         )
